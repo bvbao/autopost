@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<websites>
+    <modernWeb url="http://daythietkethoitrang.com/forum">
+        <categories>
+            <category>
+                <name>Xu hướng thời trang quốc tế</name>
+                <url>http://daythietkethoitrang.com/forum/forums/xu-huong-thoi-trang-quoc-te.16/create-thread</url>
+            </category>
+            <category>
+                <name>dsds</name>
+                <url>ds</url>
+            </category>
+            <category>
+                <name>dsdsere</name>
+                <url>dsere</url>
+            </category>
+        </categories>
+        <contentXpath>/html/body/p</contentXpath>
+        <iframeXpath>//*[@id='ThreadCreate']/fieldset[1]/dl[2]/dd/div/div/iframe</iframeXpath>
+        <lastStatus>Canceled</lastStatus>
+        <loginXpath>//*[@id="login"]/div/dl[3]/dd/input</loginXpath>
+        <password>20021992</password>
+        <passwordXpath>//*[@id="ctrl_password"]</passwordXpath>
+        <selectedCategory>
+            <name>Xu hướng thời trang quốc tế</name>
+            <url>http://daythietkethoitrang.com/forum/forums/xu-huong-thoi-trang-quoc-te.16/create-thread</url>
+        </selectedCategory>
+        <showLoginFormXpath>//*[@id="loginBarHandle"]/label/a</showLoginFormXpath>
+        <submitXpath>//*[@id="ThreadCreate"]/dl[1]/dd/input[1]</submitXpath>
+        <titleXpath>//*[@id="ctrl_title_thread_create"]</titleXpath>
+        <username>bvb1992bvb@gmail.com</username>
+        <usernameXpath>//*[@id="LoginControl"]</usernameXpath>
+    </modernWeb>
+    <modernWeb url="http://raovatthoitrang.com">
+        <categories>
+            <category>
+                <name>Quần áo nữ</name>
+                <url>http://raovatthoitrang.com/quan-ao-nu/create-thread</url>
+            </category>
+        </categories>
+        <contentXpath>/html/body/p</contentXpath>
+        <iframeXpath>//*[@id="ThreadCreate"]/fieldset[1]/dl[5]/dd/div/div/iframe</iframeXpath>
+        <lastStatus>Canceled</lastStatus>
+        <loginXpath>//*[@id="login"]/div[2]/dl[3]/dd/input</loginXpath>
+        <password>20021992</password>
+        <passwordXpath>//*[@id="ctrl_password"]</passwordXpath>
+        <selectedCategory>
+            <name>Quần áo nữ</name>
+            <url>http://raovatthoitrang.com/quan-ao-nu/create-thread</url>
+        </selectedCategory>
+        <showLoginFormXpath>//*[@id="loginBarHandle"]/label/a</showLoginFormXpath>
+        <submitXpath>//*[@id="ThreadCreate"]/dl[6]/dd/input[1]</submitXpath>
+        <titleXpath>//*[@id="ctrl_title_thread_create"]</titleXpath>
+        <username>bvb1992bvb@gmail.com</username>
+        <usernameXpath>//*[@id="LoginControl"]</usernameXpath>
+    </modernWeb>
+</websites>
