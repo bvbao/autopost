@@ -63,7 +63,7 @@ public class AutoPostService {
 					task.addListener(listener);
 					mapTask.put(website.getUrl(), task);
 				}
-				if (!task.getStatus().equals(TaskStatus.Running)) {
+				if (!task.getStatus().equals(TaskStatus.Running) && !task.getStatus().equals(TaskStatus.Canceling)) {
 					executor.execute(task);
 				}
 			} catch (Exception ex) {

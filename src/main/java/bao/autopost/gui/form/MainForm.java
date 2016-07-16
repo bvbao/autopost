@@ -50,6 +50,7 @@ import bao.autopost.service.DataService;
 public class MainForm extends JFrame {
 
 	private static final Logger logger = Logger.getLogger(MainForm.class);
+	private static final String EMPTY_TITLE_CONTENT_ERROR_MESSAGE = "Empty title or content";
 	private JPanel contentPane;
 	private JTextField txtContent;
 	private WebsiteTable tableSite;
@@ -65,7 +66,7 @@ public class MainForm extends JFrame {
 	private JFrame instance;
 	private JButton btnEdit;
 	private JButton btnDelete;
-	private JButton btnRunSelected;
+	private JButton btnRunOrStopSelected;
 	private JButton btnRunAll;
 	private StatusBar statusBar;
 
@@ -188,7 +189,7 @@ public class MainForm extends JFrame {
 			public void onAllRowsDeselected() {
 				if (tableSite.getSelectedRows().isEmpty()) {
 					btnDelete.setEnabled(false);
-					btnRunSelected.setEnabled(false);
+					btnRunOrStopSelected.setEnabled(false);
 					btnEdit.setEnabled(false);
 				}
 			}
@@ -199,14 +200,14 @@ public class MainForm extends JFrame {
 		btnEdit.setEnabled(true);
 		btnDelete.setEnabled(true);
 		if (tableSite.getCurrentStatusOfSelectedWebsite().equals(TaskStatus.Canceling)) {
-			btnRunSelected.setEnabled(false);
+			btnRunOrStopSelected.setEnabled(false);
 		} else {
-			btnRunSelected.setEnabled(true);
+			btnRunOrStopSelected.setEnabled(true);
 		}
 		if (tableSite.getCurrentStatusOfSelectedWebsite().equals(TaskStatus.Running)) {
-			btnRunSelected.setText("Stop");
+			btnRunOrStopSelected.setText("Stop");
 		} else {
-			btnRunSelected.setText("Run");
+			btnRunOrStopSelected.setText("Run");
 		}
 		Website site = (Website) obj;
 		categoryChanged = false;
@@ -283,6 +284,7 @@ public class MainForm extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				try {
+					statusBar.reset();
 					run(service.getAllSites());
 				} catch (Exception e) {
 					logger.error("Error while start running all websites", e);
@@ -291,43 +293,49 @@ public class MainForm extends JFrame {
 			}
 		});
 
-		btnRunSelected = new JButton("Run");
-		btnRunSelected.setEnabled(false);
-		toolBar.add(btnRunSelected);
-		btnRunSelected.addActionListener(new ActionListener() {
+		btnRunOrStopSelected = new JButton("Run");
+		btnRunOrStopSelected.setEnabled(false);
+		toolBar.add(btnRunOrStopSelected);
+		btnRunOrStopSelected.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if (btnRunSelected.getText().equals("Run")) {
+				if (btnRunOrStopSelected.getText().equals("Run")) {
 					try {
+						statusBar.reset();
 						run(tableSite.getSelectedRows());
-						btnRunSelected.setText("Stop");
+						btnRunOrStopSelected.setText("Stop");
 					} catch (Exception e) {
-						logger.error("Error while start running selected websites", e);
-						JOptionPane.showMessageDialog(instance, e.getMessage(), "Unknown error",
-								JOptionPane.ERROR_MESSAGE);
+						if (!e.getMessage().equals(EMPTY_TITLE_CONTENT_ERROR_MESSAGE)) {
+							logger.error("Error while start running selected websites", e);
+							JOptionPane.showMessageDialog(instance, e.getMessage(), "Unknown error",
+									JOptionPane.ERROR_MESSAGE);
+						}
 					}
 				} else {
 					service.stopTask(tableSite.getSelectedRows());
-					btnRunSelected.setText("Run");
+					btnRunOrStopSelected.setText("Run");
+					btnRunOrStopSelected.setEnabled(false);
 				}
 			}
 		});
 	}
 
 	private void run(Collection<Website> websites) throws Exception {
-		if (txtTitle.getText().trim().isEmpty()) {
+		if (txtTitle.getText().trim().isEmpty() || txtContent.getText().trim().isEmpty()) {
 			JOptionPane.showMessageDialog(instance, "Please enter title", "Empty title", JOptionPane.ERROR_MESSAGE);
-			return;
+			throw new Exception(EMPTY_TITLE_CONTENT_ERROR_MESSAGE);
 		}
 		service.post(websites, txtTitle.getText(), new PostTaskListener() {
 			@Override
 			public void taskStatusChanged(TaskStatus status, Website site) {
+				DataService.setDataChanged(true);
 				tableSite.updateTaskStatus(site, status);
 				if (status.equals(TaskStatus.Running)) {
 					statusBar.increaseRunning();
 				} else {
 					if (!status.equals(TaskStatus.Canceling)) {
 						statusBar.decreaseRunning();
+						btnRunOrStopSelected.setEnabled(true);						
 					}
 					if (status.equals(TaskStatus.Successful)) {
 						statusBar.increaseSuccess();
@@ -443,6 +451,7 @@ public class MainForm extends JFrame {
 				if (categoryChanged) {
 					Category cat = (Category) cbbCategory.getSelectedItem();
 					tableSite.updateCategoryForSelectedWebsite(cat);
+					DataService.setDataChanged(true);
 				}
 			}
 		});

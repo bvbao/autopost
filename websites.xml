@@ -17,7 +17,7 @@
         </categories>
         <contentXpath>/html/body/p</contentXpath>
         <iframeXpath>//*[@id='ThreadCreate']/fieldset[1]/dl[2]/dd/div/div/iframe</iframeXpath>
-        <lastStatus>Canceled</lastStatus>
+        <lastStatus>Successful</lastStatus>
         <loginXpath>//*[@id="login"]/div/dl[3]/dd/input</loginXpath>
         <password>20021992</password>
         <passwordXpath>//*[@id="ctrl_password"]</passwordXpath>
