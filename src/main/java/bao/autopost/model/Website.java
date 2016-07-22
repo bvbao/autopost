@@ -224,7 +224,7 @@ public abstract class Website {
 		login();
 		goToSelectedCategory();
 		fillPostInfo(title, content);
-		// submitPost();
+//		submitPost();
 	}
 
 	public void quit() {

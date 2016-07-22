@@ -54,9 +54,6 @@ public class MainForm extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtContent;
 	private WebsiteTable tableSite;
-	private JMenu mnSettings;
-	private JMenuItem mnItemAccount;
-	private JMenuItem mnItemConfig;
 	private AutoPostService service = new AutoPostService();
 	private JComboBox<Category> cbbCategory;
 	private JToolBar toolBar;
@@ -69,6 +66,7 @@ public class MainForm extends JFrame {
 	private JButton btnRunOrStopSelected;
 	private JButton btnRunAll;
 	private StatusBar statusBar;
+	private JButton btnSettings;
 
 	public static void main(String[] args) throws ClassNotFoundException, InstantiationException,
 			IllegalAccessException, UnsupportedLookAndFeelException {
@@ -152,20 +150,6 @@ public class MainForm extends JFrame {
 	}
 
 	private void createMenu() {
-		JMenuBar menuBar = new JMenuBar();
-		setJMenuBar(menuBar);
-
-		JMenu mnFile = new JMenu("File");
-		menuBar.add(mnFile);
-
-		mnSettings = new JMenu("Settings");
-		menuBar.add(mnSettings);
-
-		mnItemAccount = new JMenuItem("Account");
-		mnSettings.add(mnItemAccount);
-
-		mnItemConfig = new JMenuItem("Configuration");
-		mnSettings.add(mnItemConfig);
 	}
 
 	private void createTable() throws JAXBException {
@@ -296,6 +280,15 @@ public class MainForm extends JFrame {
 		btnRunOrStopSelected = new JButton("Run");
 		btnRunOrStopSelected.setEnabled(false);
 		toolBar.add(btnRunOrStopSelected);
+		
+		btnSettings = new JButton("Settings");
+		btnSettings.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				SettingDialog dialog = new SettingDialog(instance);
+				dialog.setVisible(true);
+			}
+		});
+		toolBar.add(btnSettings);
 		btnRunOrStopSelected.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
